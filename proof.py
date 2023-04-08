@@ -1206,6 +1206,30 @@ class ProofEnvironment:
      self.log.append("NewTheorem(" + '" ' + string + '"'  + ")")
      return True     
      
+     
+ def AxInt(self, up,name):
+  aux =  Proof.proof[up].formula
+  if aux.type=="Typing":
+   gamma = GetTypingContext(aux)
+   if len(gamma.children) == 0 and IsUniverse(GetTypingType(aux)):
+     
+     if not name in self.definitions.keys() and not name in parser.constants:    
+       aux2 = GetTypingTerm(aux)
+      
+       
+       parser.constants.append(name)
+       const = Leaf(name,"HottTerm")
+       aux3 = MakeGenTyp(const, aux2)
+       
+       aux4 = MakeTyping(gamma, aux3)
+       proofelement = ProofElement("AxInt",[up],[name], aux4)
+       proofelement.pos = len(self.proof) + 1
+       self.proof.append(proofelement)
+       self.log.append("AxInt(" + '" ' + name + '"'  + "," + str(up) + ")")
+       return True     
+        
+#Also Must Implement Command to Eliminate Axiom Constant
+     
  def Hyp(self, string):
    if HottExp(string)!=None:
      #must check environment compatibility or impose empty context and mere compatible variable typing  
@@ -1259,147 +1283,233 @@ def ShowProof():
   Proof.ShowProof()
   return True
   
+def AxInt(up,name):
+  Proof.AxInt(up,name)  
+  ShowProof()
+  return
+  
    
 def CtxEmp():
-  return Proof.CtxEmp()
+  Proof.CtxEmp()
+  ShowProof()
+  return
   
 def CtxExt(up,varstring):
-  return Proof.CtxExt(up,varstring)
- 
+  Proof.CtxExt(up,varstring)
+  ShowProof()
+  return
+  
 def Vble(up,n):
-    return Proof.Vble(up,n)
-
+  Proof.Vble(up,n)
+  ShowProof()
+  return
+  
 def Refl(up):
-    return Proof.Refl(up)
-
+  Proof.Refl(up)
+  ShowProof()
+  return
+  
 def Sym(up):
-    return Proof.Sym(up)
+  Proof.Sym(up)
+  ShowProof()
+  return
     
-def Trans(left,right):    
-    return Proof.Trans(left,right)
+def Trans(left,right):   
+   Proof.Trans(left,right)
+   ShowProof()
+   return
     
 def Equiv1(left,right):    
-    return Proof.Equiv1(left,right)
+    Proof.Equiv1(left,right)
+    ShowProof()
+    return
         
 def Equiv2(left,right):    
-    return Proof.Equiv2(left,right)
+    Proof.Equiv2(left,right)
+    ShowProof()
+    return
             
     
 def UIntro(up,i):
-    return Proof.UIntro(up,i)
+    Proof.UIntro(up,i)
+    ShowProof()
+    return
     
     
 def UCumul(up):    
-    return Proof.UCumul(up) 
+    Proof.UCumul(up) 
+    ShowProof()
+    return
        
 def PiIntro(up):
-    return Proof.PiIntro(up)   
+    Proof.PiIntro(up)   
+    ShowProof()
+    return
     
 def PiForm(left,right):
-    return Proof.DepForm(left,right, "Pi") 
+    Proof.DepForm(left,right, "Pi") 
+    ShowProof()
+    return
     
 def SigmaForm(left,right):
-    return Proof.DepForm(left,right, "Sigma") 
-         
+    Proof.DepForm(left,right, "Sigma") 
+    ShowProof()
+    return     
     
 def PiElim(left,right):
-    return Proof.PiElim(left,right)  
+    Proof.PiElim(left,right)  
+    ShowProof()
+    return
     
 def PiComp(left,right):        
-    return Proof.PiComp(left,right)
+    Proof.PiComp(left,right)
+    ShowProof()
+    return
     
 def PiUniq(up):    
-    return Proof.PiUniq(up)
+    Proof.PiUniq(up)
+    ShowProof()
+    return
     
 def SigmaIntro(up, left, right):    
-    return Proof.SigmaIntro( up, left, right)
-    
+    Proof.SigmaIntro( up, left, right)
+    ShowProof()
+    return
 
 def SigmaElim(up,left,right):         
-    return Proof.SigmaElim(up,left,right)  
-    
+    Proof.SigmaElim(up,left,right)  
+    ShowProof()
+    return
     
 def SigmaComp(up, left,right1,right2):           
-    return Proof.SigmaComp(up, left,right1,right2 )
-
+    Proof.SigmaComp(up, left,right1,right2 )
+    ShowProof()
+    return
+    
 def PlusForm(left,right):
-    return Proof.PlusForm(left,right)
+    Proof.PlusForm(left,right)
+    ShowProof()
+    return
     
 def PlusIntro1(left,right,up):
-    return Proof.PlusIntro(left,right,up,1)
+    Proof.PlusIntro(left,right,up,1)
+    ShowProof()
+    return
     
 def PlusIntro2(left,right,up):
-    return Proof.PlusIntro(left,right,up,2)
+    Proof.PlusIntro(left,right,up,2)
+    ShowProof()
+    return
     
 def PlusElim(down,left,right,up):
-    return Proof.PlusElim(down,left,right,up)
+    Proof.PlusElim(down,left,right,up)
+    ShowProof()
+    return
     
 def PlusComp1(down,left,right,up):
-    return Proof.PlusComp(down,left,right,up,1)        
+    Proof.PlusComp(down,left,right,up,1)        
+    ShowProof()
+    return
             
 def PlusComp2(down,left,right,up):
-    return Proof.PlusComp(down,left,right,up,2)
+    Proof.PlusComp(down,left,right,up,2)
+    ShowProof()
+    return
             
 def OForm(up,i):
-    return Proof.OForm(up,i)    
-
+    Proof.OForm(up,i)    
+    ShowProof()
+    return
+    
 def OElim(left,right):
-    return Proof.OElim(left,right)
-
+    Proof.OElim(left,right)
+    ShowProof()
+    return
     
 def NatForm(up,i):
-    return Proof.NatForm(up,i)
+    Proof.NatForm(up,i)
+    ShowProof()
+    return
     
 def NatIntro1(up):
-    return Proof.NatIntro1(up)
+    Proof.NatIntro1(up)
+    ShowProof()
+    return
     
 def NatIntro2(up):
-    return Proof.NatIntro2(up)
+    Proof.NatIntro2(up)
+    ShowProof()
+    return
                 
 def NatElim( up,left,right,down): 
-    return Proof.NatElim(up,left,right,down)
-
+    Proof.NatElim(up,left,right,down)
+    ShowProof()
+    return
+    
  
 def NatComp1( up,left,right):
-    return Proof.NatComp1(up,left,right)
+    Proof.NatComp1(up,left,right)
+    ShowProof()
+    return
     
 def NatComp2( up,left,right,down): 
-     return Proof.NatComp2(up,left,right,down)   
- 
+     Proof.NatComp2(up,left,right,down)   
+     ShowProof()
+     return()
+     
 def EqForm(left,center,right): 
-    return Proof.EqForm(left,center,right)
- 
+    Proof.EqForm(left,center,right)
+    ShowProof()
+    return()
+    
 def EqIntro(left,right):
-    return Proof.EqIntro(left,right)   
+    Proof.EqIntro(left,right)   
+    ShowProof()
+    return
     
 def EqElim(ty1,ty2,ty3,ty4,ty5):                
-    return Proof.EqElim(ty1,ty2,ty3,ty4,ty5)
-
-def EqComp(ty1,ty2,ty3):    
-    return Proof.EqComp(ty1,ty2,ty3)
+    Proof.EqElim(ty1,ty2,ty3,ty4,ty5)
+    ShowProof()
+    return
     
+def EqComp(ty1,ty2,ty3):    
+    Proof.EqComp(ty1,ty2,ty3)
+    ShowProof()
+    return
     
 def Subst1(left,right,pos):   
-    return Proof.Subst1(left,right,pos)    
-   
+    Proof.Subst1(left,right,pos)    
+    ShowProof()
+    return
+    
 def Subst2(left,right,pos):   
-    return Proof.Subst2(left,right,pos)
-  
+    Proof.Subst2(left,right,pos)
+    ShowProof()
+    return
+    
 def Subst3(left,right,pos):  
-    return Proof.Subst3(left,right,pos)
+    Proof.Subst3(left,right,pos)
+    ShowProof()
+    return
     
 def Wkg1(left,right,varname,pos):
-    return Proof.Wkg1(left,right,varname,pos)
+    Proof.Wkg1(left,right,varname,pos)
+    ShowProof()
+    return
     
 def Wkg2(left,right,varname,pos):
-    return Proof.Wkg2(left,right,varname,pos)        
+    Proof.Wkg2(left,right,varname,pos)        
+    ShowProof()
+    return
         
 def NewDef(up,name):
-    return Proof.NewDef(up,name)    
+    Proof.NewDef(up,name)    
+    return
     
 def DefInt(up,constant,places):
-    return Proof.DefInt(up,constant,places)    
-
+    Proof.DefInt(up,constant,places)
+    ShowProof()    
+    return
 
     
     
